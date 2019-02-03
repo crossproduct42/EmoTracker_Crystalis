@@ -1,0 +1,12 @@
+{
+  "name": "Crystalis Randomizer",
+  "packages": [
+    {
+      "name": "Crystalis Randomizer",
+      "author": "crossproduct",
+      "version": "1.00",
+      "uid": "crystalis_crossproduct",
+      "link": "https://crossproduct42.github.io/storage/crystalis_crossproduct.zip"
+    }
+  ]
+}
