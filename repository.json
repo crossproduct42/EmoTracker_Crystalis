@@ -6,6 +6,8 @@
       "author": "crossproduct",
       "version": "1.00",
       "uid": "crystalis_crossproduct",
+  	  "flags": [ "chathud" ],
+	  "game": "Crystalis Randomizer",
       "link": "https://crossproduct42.github.io/storage/crystalis_crossproduct.zip"
     }
   ]
