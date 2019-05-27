@@ -1,0 +1,248 @@
+<html>
+
+<script>
+var rng;
+
+function initRNG(){
+	rng = Math.floor(Math.random()*100000000);
+}
+
+function incRNG(){
+	var digit1 = Math.floor(rng/10000000);
+	var digit2 = Math.floor(rng/1000000) - 10 * digit1;
+	var digitSum = digit1 + digit2;
+	if (digitSum > 9)
+		digitSum -= 10;
+	rng = (rng-digit1*10000000) * 10 + digitSum;
+}
+
+
+function randomize(){
+	// reset card state
+	var tans = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
+	var greens = [];
+	var blacks = [];
+	document.getElementById("card0").className = "";
+	document.getElementById("card1").className = "";
+	for(var k=0; k<25; k++){
+		document.getElementById("0" + k).className = "";
+		document.getElementById("1" + k).className = "";
+	}
+	
+	// Read seed or generate new one if it's blank
+	var seed = document.getElementById("seed").value;
+	if (seed === ""){
+		initRNG();
+		document.getElementById("card0").className = "visible";
+	}
+	else {
+		rng = parseInt(seed, 16);
+		document.getElementById("card1").className = "visible";
+	}
+	document.getElementById("rng").innerHTML = "<b>Seed: </b>" + rng.toString(16);
+
+	// Player One's Green
+	for(var k=0; k<9; k++){
+		var x = randInt(tans.length);
+		var cell = tans[x];
+		tans.splice(x,1);
+		greens[greens.length] = cell;
+		document.getElementById("0" + cell).className = "green";
+	}
+
+	// Player One's Black
+	for(var k=0; k<3; k++){
+		var x = randInt(tans.length);
+		var cell = tans[x];
+		tans.splice(x,1);
+		blacks[blacks.length] = cell;
+		document.getElementById("0" + cell).className = "black";
+	}
+	
+	// Player Two's Shared Greens
+	for(var k=0; k<3; k++){
+		var x = randInt(greens.length);
+		var cell = greens[x];
+		greens.splice(x,1);
+		document.getElementById("1" + cell).className = "green";
+	}
+	
+	// Player Two's Unique Greens
+	for(var k=0; k<5; k++){
+		var x = randInt(tans.length);
+		var cell = tans[x];
+		tans.splice(x,1);
+		document.getElementById("1" + cell).className = "green";
+	}
+
+	// P2's Green, P1's Black
+	for(var k=0; k<1; k++){
+		var x = randInt(blacks.length);
+		var cell = blacks[x];
+		blacks.splice(x,1);
+		document.getElementById("1" + cell).className = "green";
+	}
+
+	// P2's Black, P1's Green
+	for(var k=0; k<1; k++){
+		var x = randInt(greens.length);
+		var cell = greens[x];
+		greens.splice(x,1);
+		document.getElementById("1" + cell).className = "black";
+	}
+	
+	// P2's Shared Black
+	for(var k=0; k<1; k++){
+		var x = randInt(blacks.length);
+		var cell = blacks[x];
+		blacks.splice(x,1);
+		document.getElementById("1" + cell).className = "black";
+	}
+	
+	// P2's Unique Black
+	for(var k=0; k<1; k++){
+		var x = randInt(tans.length);
+		var cell = tans[x];
+		tans.splice(x,1);
+		document.getElementById("1" + cell).className = "black";
+	}
+}
+
+function randInt(x){
+	var result = rng % x;
+	incRNG();
+	return result;
+}
+
+</script>
+
+<style>
+td{
+	width: 50px;
+	height: 50px;
+	background-color: tan;
+}
+
+table{
+	position: absolute;
+	top: 48px;
+	visibility: hidden;
+}
+
+.visible{
+	visibility: visible;
+}
+
+.green{
+	background-color: green;
+}
+
+.black{
+	background-color: black;
+}
+
+
+</style>
+
+<body>
+<p id="rng">
+	<input type="text" id="seed">
+	<input type="button" value="Seed" onClick="randomize()">
+</p>
+
+<table id="card0" border="1">
+	<tr>
+		<th colspan="5">PLAYER ONE</th>
+	</tr>
+	<tr>
+		<td id="00"></td>
+		<td id="01"></td>
+		<td id="02"></td>
+		<td id="03"></td>
+		<td id="04"></td>
+	</tr>
+	<tr>
+		<td id="05"></td>
+		<td id="06"></td>
+		<td id="07"></td>
+		<td id="08"></td>
+		<td id="09"></td>
+	</tr>
+	<tr>
+		<td id="010"></td>
+		<td id="011"></td>
+		<td id="012"></td>
+		<td id="013"></td>
+		<td id="014"></td>
+	</tr>
+	<tr>
+		<td id="015"></td>
+		<td id="016"></td>
+		<td id="017"></td>
+		<td id="018"></td>
+		<td id="019"></td>
+	</tr>
+	<tr>
+		<td id="020"></td>
+		<td id="021"></td>
+		<td id="022"></td>
+		<td id="023"></td>
+		<td id="024"></td>
+	</tr>
+</table>
+
+<table id="card1" border="1">
+	<tr>
+		<th colspan="5">PLAYER TWO</th>
+	</tr>
+	<tr>
+		<td id="10"></td>
+		<td id="11"></td>
+		<td id="12"></td>
+		<td id="13"></td>
+		<td id="14"></td>
+	</tr>
+	<tr>
+		<td id="15"></td>
+		<td id="16"></td>
+		<td id="17"></td>
+		<td id="18"></td>
+		<td id="19"></td>
+	</tr>
+	<tr>
+		<td id="110"></td>
+		<td id="111"></td>
+		<td id="112"></td>
+		<td id="113"></td>
+		<td id="114"></td>
+	</tr>
+	<tr>
+		<td id="115"></td>
+		<td id="116"></td>
+		<td id="117"></td>
+		<td id="118"></td>
+		<td id="119"></td>
+	</tr>
+	<tr>
+		<td id="120"></td>
+		<td id="121"></td>
+		<td id="122"></td>
+		<td id="123"></td>
+		<td id="124"></td>
+	</tr>
+</table>
+
+
+
+
+
+</body>
+
+
+
+
+
+
+
+
+</html>
