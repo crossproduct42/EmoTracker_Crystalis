@@ -13,7 +13,7 @@
     {
       "name": "Phasmophobia Evidence Tracker",
       "author": "crossproduct",
-      "version": "1.1.2",
+      "version": "1.1.3",
       "uid": "phasmophobia_crossproduct",
   	  "flags": [ "chathud" ],
 	  "game_name": "Phasmophobia",
